@@ -13,6 +13,8 @@ docker-compose down
 if [ "$1" = "clean" ]; then
     rm -rf ./api
     rm -rf ./www
+    echo "CLEANED"
+    exit 0
 fi
 
 [ ! -e ./mfdb.sql ] && echo "ERR: Initial SQL doesn't exist!" && exit 3
