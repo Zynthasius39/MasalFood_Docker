@@ -15,6 +15,11 @@ if [ "$1" = "clean" ]; then
     rm -rf ./www
     echo "CLEANED"
     exit 0
+elif [ "$1" = "update" ]; then
+    $0 clean
+    $0
+    echo "UPDATED"
+    exit 0
 fi
 
 [ ! -e ./mfdb.sql ] && echo "ERR: Initial SQL doesn't exist!" && exit 3
@@ -23,9 +28,10 @@ if [ ! -d ./api ]; then
     git clone https://github.com/adiliso/MasalFood.git ./api
 else
     git -C ./api pull -f
-    [ -e ./api/main.jar ] && rm ./api/main.jar
-    curl -L $(curl -s https://api.github.com/repos/adiliso/MasalFood/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \") -o ./api/main.jar
 fi
+
+[ -e ./api/main.jar ] && rm ./api/main.jar
+curl -L $(curl -s https://api.github.com/repos/adiliso/MasalFood/releases/latest | grep "browser_download_url.*jar" | cut -d : -f 2,3 | tr -d \") -o ./api/main.jar
 
 if [ ! -d ./www ]; then
     git clone https://github.com/Mirali44/MasalFood.git ./www
