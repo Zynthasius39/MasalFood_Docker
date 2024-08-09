@@ -1,0 +1,29 @@
+services:
+  mf_nginx:
+    hostname: mf_nginx
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+  mf_db:
+    hostname: mf_db
+    build:
+      context: https://github.com/adiliso/MasalFood.git
+      dockerfile: Dockerfile.db
+    environment:
+      - POSTGRES_USER="postgres"
+      - POSTGRES_PASSOWRD="S3CR3TP4SSW0RD"
+  mf_api:
+    hostname: mf_api
+    build:
+      context: https://github.com/adiliso/MasalFood.git
+      dockerfile: Dockerfile.web
+    environment:
+      - MFDB_HOST="mf_db"
+      - MFDB_PORT=5432
+      - MFDB_USER="postgres"
+      - MFDB_PASSWORD="S3CR3TP4SSW0RD"
+    links:
+      - "mf_db"
+    ports:
+      - "8080:8080"
