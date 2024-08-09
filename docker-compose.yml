@@ -6,15 +6,15 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - type: volume
+      - type: bind
         source: "${PWD}/nginx/nginx.conf"
         target: "/etc/nginx/nginx.conf"
         read_only: true
-      - type: volume
+      - type: bind
         source: "${PWD}/nginx/masalfood.conf"
         target: "/etc/nginx/conf.d/masalfood.conf"
         read_only: true
-      - type: volume
+      - type: bind
         source: "${PWD}/www/dist"
         target: "/var/www/masalfood"
         read_only: true
@@ -22,7 +22,7 @@ services:
     hostname: mf_db
     image: postgres:latest
     volumes:
-      - type: volume
+      - type: bind
         source: "${PWD}/mfdb.sql"
         target: "/docker-entrypoint-initdb.d/mfdb.sql"
         read_only: true
@@ -34,11 +34,11 @@ services:
     image: openjdk:21-jdk
     command: java -jar /server/main.jar
     volumes:
-      - type: volume
+      - type: bind
         source: "${PWD}/api/static"
         target: "/server/static"
         read_only: true
-      - type: volume
+      - type: bind
         source: "${PWD}/api/main.jar"
         target: "/server/main.jar"
         read_only: true
