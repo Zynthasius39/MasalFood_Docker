@@ -42,6 +42,7 @@ services:
         source: "${PWD}/api/main.jar"
         target: "/server/main.jar"
         read_only: true
+    working_dir:  /server
     environment:
       - MFDB_HOST=mf_db
       - MFDB_PORT=5432
