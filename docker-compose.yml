@@ -28,7 +28,7 @@ services:
         read_only: true
     environment:
       - POSTGRES_USER="postgres"
-      - POSTGRES_PASSOWRD="S3CR3TP4SSW0RD"
+      - POSTGRES_PASSWORD="S3CR3TP4SSW0RD"
   mf_api:
     hostname: mf_api
     image: openjdk:21-jdk
