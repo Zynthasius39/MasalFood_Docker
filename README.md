@@ -1,7 +1,7 @@
 ## Deploying up-to-date version of **MasalFood** project using Docker
 
-### [MasalFood Frontend](https://github.com/Mirali44/MasalFood) by adiliso
-### [MasalFood Backend](https://github.com/adiliso/MasalFood) by Mirali44
+### [MasalFood Frontend](https://github.com/Mirali44/MasalFood) by [Mirali44](https://github.com/Mirali44)
+### [MasalFood Backend](https://github.com/adiliso/MasalFood) by [adiliso](https://github.com/adiliso)
 #
 
 How To Use?
