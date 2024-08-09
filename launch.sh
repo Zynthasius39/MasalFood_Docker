@@ -16,6 +16,15 @@ if [ "$1" = "clean" ]; then
     echo "CLEANED"
     exit 0
 elif [ "$1" = "update" ]; then
+    if [ "$2" = "manual" ]; then
+        docker run -it --rm -v "$(pwd)"/www:/www -w /www node:slim bash -c "npm install && npm run build"
+        [ $? -ne 0 ] || [ ! -d ./www/dist ] && echo "ERR: Couldn't build node project" && exit 2
+
+        docker-compose up -d
+        [ $? -ne 0 ] && echo "ERR: Couldn't docker-compose up!" && exit 5
+        echo "MANUAL_UPDATE"
+        exit 0
+    fi
     $0 clean
     $0
     echo "UPDATED"
