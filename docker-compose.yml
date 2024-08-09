@@ -27,8 +27,8 @@ services:
         target: "/docker-entrypoint-initdb.d/mfdb.sql"
         read_only: true
     environment:
-      - POSTGRES_USER="postgres"
-      - POSTGRES_PASSWORD="S3CR3TP4SSW0RD"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=S3CR3TP4SSW0RD
   mf_api:
     hostname: mf_api
     image: openjdk:21-jdk
@@ -43,10 +43,10 @@ services:
         target: "/server/main.jar"
         read_only: true
     environment:
-      - MFDB_HOST="mf_db"
+      - MFDB_HOST=mf_db
       - MFDB_PORT=5432
-      - MFDB_USER="postgres"
-      - MFDB_PASSWORD="S3CR3TP4SSW0RD"
+      - MFDB_USER=postgres
+      - MFDB_PASSWORD=S3CR3TP4SSW0RD
     links:
       - "mf_db"
     ports:
