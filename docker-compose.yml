@@ -1,23 +1,47 @@
 services:
   mf_nginx:
     hostname: mf_nginx
-    build: .
+    image: nginx:latest
     ports:
       - "80:80"
       - "443:443"
+    volumes:
+      - type: volume
+        source: "${PWD}/nginx/nginx.conf"
+        target: "/etc/nginx/nginx.conf"
+        read_only: true
+      - type: volume
+        source: "${PWD}/nginx/masalfood.conf"
+        target: "/etc/nginx/conf.d/masalfood.conf"
+        read_only: true
+      - type: volume
+        source: "${PWD}/www/dist"
+        target: "/var/www/masalfood"
+        read_only: true
   mf_db:
     hostname: mf_db
-    build:
-      context: https://github.com/adiliso/MasalFood.git
-      dockerfile: Dockerfile.db
+    image: postgres:latest
+    volumes:
+      - type: volume
+        source: "${PWD}/mfdb.sql"
+        target: "/docker-entrypoint-initdb.d/mfdb.sql"
+        read_only: true
     environment:
       - POSTGRES_USER="postgres"
       - POSTGRES_PASSOWRD="S3CR3TP4SSW0RD"
   mf_api:
     hostname: mf_api
-    build:
-      context: https://github.com/adiliso/MasalFood.git
-      dockerfile: Dockerfile.web
+    image: openjdk:21-jdk
+    command: java -jar /server/main.jar
+    volumes:
+      - type: volume
+        source: "${PWD}/api/static"
+        target: "/server/static"
+        read_only: true
+      - type: volume
+        source: "${PWD}/api/main.jar"
+        target: "/server/main.jar"
+        read_only: true
     environment:
       - MFDB_HOST="mf_db"
       - MFDB_PORT=5432
